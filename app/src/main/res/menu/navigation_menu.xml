@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Add_note"
+        android:title="Add Note"
+        android:icon="@drawable/add_ic"
+        >
+
+    </item>
+    <item android:id="@+id/Main"
+        android:title="All Notes"
+        android:icon="@drawable/main_ic"
+        >
+
+    </item>
+
+    <item android:id="@+id/call"
+        android:title="Call Us"
+        android:icon="@drawable/call_ic">
+
+
+    </item>
+    <item android:id="@+id/logout"
+        android:title="logout"
+        android:icon="@drawable/logout_ic">
+
+    </item>
+</menu>
