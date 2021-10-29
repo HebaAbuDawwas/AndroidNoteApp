@@ -9,19 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#5BF1F4F6"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-110dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="200dp"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:foregroundGravity="center"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:foregroundGravity="fill"
                 app:srcCompat="@mipmap/ic_launcher_note" />
         </LinearLayout>
 
@@ -34,11 +38,11 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:layout_marginTop="20dp"
+                android:fontFamily="casual"
                 android:gravity="center"
                 android:text="Welcome To Our Note App"
-                android:textColor="#68A7AE"
+                android:textColor="#CE83B4BA"
                 android:textSize="30sp"
                 android:textStyle="bold|italic" />
         </LinearLayout>
