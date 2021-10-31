@@ -29,16 +29,19 @@ import java.util.ArrayList;
 
 public class MainActivity3 extends AppCompatActivity {
 
+
     NavigationView naviV;
     DrawerLayout main_drawer_ly;
     private Menu main_menu ;
-    ImageView menuIcon;
+    ImageView menuIcon,newIc;
     TextView texttitle;
     TextView textid;
 
+    int userId = MainActivity.userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
@@ -47,6 +50,7 @@ public class MainActivity3 extends AppCompatActivity {
         main_drawer_ly=(DrawerLayout) findViewById(R.id.drawer_layout);
         main_menu=naviV.getMenu();
         menuIcon= (ImageView) findViewById(R.id.menu_ic);
+        newIc=(ImageView)findViewById(R.id.newIc);
 
 
 
@@ -56,8 +60,10 @@ public class MainActivity3 extends AppCompatActivity {
                  main_drawer_ly.openDrawer(GravityCompat.START);
             }
         });
+        //-----------------------------------------------------------------------------
         DatabaseSqliteMain databaseSqlite = new DatabaseSqliteMain(this);
-        ArrayList<Notes> arrayList = databaseSqlite.getDataNote();
+        ArrayList<Notes> arrayList = databaseSqlite.getDataNote(userId);
+       // Toast.makeText(MainActivity3.this,userId+"",Toast.LENGTH_SHORT).show();
 
 
 
@@ -66,6 +72,15 @@ public class MainActivity3 extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.listviewD);
         Add a = new Add(arrayList);
         listView.setAdapter(a);
+
+        //-----------------------------------
+        newIc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(MainActivity3.this, MainActivity4.class);
+                startActivity(in);
+            }
+        });
 
         //--------------------------------------------------------
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -88,6 +103,7 @@ public class MainActivity3 extends AppCompatActivity {
 
 
                 startActivity(intent);
+                finish();
 
 
             }
@@ -107,6 +123,7 @@ public class MainActivity3 extends AppCompatActivity {
 
 
     }
+
     class Add extends BaseAdapter {
 
         ArrayList<Notes> l = new ArrayList<Notes>();

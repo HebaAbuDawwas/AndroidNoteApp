@@ -27,6 +27,7 @@ public class MainActivity4 extends AppCompatActivity {
     NavigationView naviV;
     DrawerLayout main_drawer_ly;
     private Menu main_menu ;
+    int userId = MainActivity.userId;
 
 
     @Override
@@ -55,7 +56,7 @@ public class MainActivity4 extends AppCompatActivity {
                 if(!noteT.getText().toString().equals("")&&!titleT.getText().toString().equals(""))
                 {
 
-                    Toast.makeText(MainActivity4.this , databaseSqlite.insertDataNote(noteT.getText().toString(),titleT.getText().toString()) , Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity4.this , databaseSqlite.insertDataNote(noteT.getText().toString(),titleT.getText().toString(),userId) , Toast.LENGTH_LONG).show();
                     noteT.setText("");
                     titleT.setText("");
 
@@ -78,12 +79,14 @@ public class MainActivity4 extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("tel:0779025502") );
                 startActivity(intent);
+
                 break;
 
             case (R.id.Main):
                 Intent in = new Intent (MainActivity4.this, MainActivity3.class);
 
                 startActivity(in);
+                finish();
                 break;
             case (R.id.logout):
                 Intent in1 = new Intent(MainActivity4.this, MainActivity.class);

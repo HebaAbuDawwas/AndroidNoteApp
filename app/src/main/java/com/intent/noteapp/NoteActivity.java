@@ -1,7 +1,9 @@
 package com.intent.noteapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,13 +24,16 @@ public class NoteActivity extends AppCompatActivity {
     DatabaseSqliteMain databaseSqlite;
     TextView textbar;
     int Id;
+   int userId = MainActivity.userId;
+   AlertDialog.Builder alertBuilder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         databaseSqlite = new DatabaseSqliteMain(this);
-        arrayList = databaseSqlite.getDataNote();
+        arrayList = databaseSqlite.getDataNote(userId);
 
         Intent intent = getIntent();
         String noteTitle = intent.getExtras().getString("noteTitle");
@@ -53,16 +58,35 @@ public class NoteActivity extends AppCompatActivity {
                 databaseSqlite.UpdateNote(Id+"",temp,noteTitle);
                 Intent in = new Intent(NoteActivity.this,MainActivity3.class);
                 startActivity(in);
+                finish();
             }
 
         });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    alertBuilder= new AlertDialog.Builder(NoteActivity.this);
+                    alertBuilder.setTitle("SURE ?");
+                    alertBuilder.setMessage("Are You Sure You Want To delete This Note :\nnote title:"+noteTitle+"\nnote:"+noteText+"   ?");
+                    alertBuilder.setPositiveButton("Conform", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            databaseSqlite.DeleteNote(Id+"");
+                            Intent in = new Intent(NoteActivity.this,MainActivity3.class);
+                            startActivity(in);
+                            finish();
+                        }
+                    });
+                    alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertBuilder.show();
 
-                databaseSqlite.DeleteNote(Id+"");
-                Intent in = new Intent(NoteActivity.this,MainActivity3.class);
-                startActivity(in);
+
+
             }
 
         });

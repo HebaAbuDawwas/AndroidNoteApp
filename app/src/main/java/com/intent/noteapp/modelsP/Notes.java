@@ -2,11 +2,11 @@ package com.intent.noteapp.modelsP;
 
 public class Notes {
     String note,notetitle;
-    int id;
+    int id,userId;
 
-    public Notes(int id ,String note, String notetitle) {
+    public Notes(int id ,int userId,String note, String notetitle) {
         this.note = note;
-
+        this.userId=userId;
         this.id=id;
         this.notetitle=notetitle;
     }
@@ -36,6 +36,11 @@ public class Notes {
         this.notetitle = notetitle;
     }
 
+    public int getUserId() {
+        return userId;
+    }
 
-
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

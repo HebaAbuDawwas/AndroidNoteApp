@@ -22,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
     Button signUp;
     Button signin;
     DatabaseSqliteMain databaseSqlite;
-
+    public static int userId;
+    ArrayList<User> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Toast.makeText(MainActivity.this,"Test", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseSqlite = new DatabaseSqliteMain(this);
@@ -46,7 +48,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //-----------------------------
-        ArrayList<User> arrayList=databaseSqlite.getDataUser();
+        arrayList=null;
+
+        arrayList=databaseSqlite.getDataUser();
+
+        //for(int i=0;i<arrayList.size();i++)
+          //  Toast.makeText(MainActivity.this,arrayList.get(i).getEmail(),Toast.LENGTH_SHORT).show();
 
 
 
@@ -55,30 +62,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean flag=false;
-
-
+                // Toast.makeText(MainActivity.this,arrayList.size()+"",Toast.LENGTH_SHORT).show();
+                //for(int i=0;i<arrayList.size();i++)
+                  //  Toast.makeText(MainActivity.this,arrayList.get(i).getEmail(),Toast.LENGTH_SHORT).show();
                 for(int i=0;i<arrayList.size();i++){
                     if(arrayList.get(i).getEmail().equals(email.getText().toString()) && arrayList.get(i).getPassword().equals(passWord.getText().toString()))
-                    {   flag=true;
+                    {
+                        flag=true;
+                        userId= arrayList.get(i).getId();
 
                         break;
                     }
 
-                    email.setText("");
-                    passWord.setText("");
+
 
 
 
                 }
 
                 if(flag) {
+                    email.setText("");
+                    passWord.setText("");
 
                     Intent intent = new Intent(MainActivity.this,MainActivity3.class);
-
                     startActivity(intent);
 
                 }
                 else {
+                    email.setText("");
+                    passWord.setText("");
                     Toast.makeText(MainActivity.this,"Invalid Email or Password" , Toast.LENGTH_SHORT).show();
 
                 }

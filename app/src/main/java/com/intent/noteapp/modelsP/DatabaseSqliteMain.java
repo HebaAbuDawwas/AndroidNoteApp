@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseSqliteMain extends SQLiteOpenHelper {
 
-    public static final String DataBaseName = "noteapp.db";
+    public static final String DataBaseName = "noteappTestTest.db";
 
     public DatabaseSqliteMain(Context con) {
         super(con, DataBaseName, null, 1);
@@ -20,7 +20,7 @@ public class DatabaseSqliteMain extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE User (id INTEGER PRIMARY KEY AUTOINCREMENT ,fullname TEXT ,username TEXT , email TEXT , password TEXT )");
-        db.execSQL("CREATE TABLE Notes (id INTEGER PRIMARY KEY AUTOINCREMENT, note TEXT,notetitle TEXT)");
+        db.execSQL("CREATE TABLE Notes (id INTEGER PRIMARY KEY AUTOINCREMENT,userId INTEGER, note TEXT,notetitle TEXT)");
     }
 
     @Override
@@ -86,29 +86,35 @@ public class DatabaseSqliteMain extends SQLiteOpenHelper {
 //--------------------------------------------------------------NOTES---------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 
-    public String insertDataNote(String note,String notetitle) {
+    public String insertDataNote(String note,String notetitle, int userId) {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put("userId",userId);
         values.put("note", note);
         values.put("notetitle",notetitle);
+
         long re = sqLiteDatabase.insert("Notes", null, values);
         if(re==-1) return "Error ";
         else return "Data Saved successfuly";
 
     }
 
-    public ArrayList getDataNote(){
+    public ArrayList getDataNote(int Id){
         ArrayList <Notes> arrayList= new ArrayList<Notes>();
         SQLiteDatabase sqLiteDatabase =this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Notes",null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT *  FROM Notes " +
+                " WHERE Notes.userId=" +Id
+                +" ",null);
+
         cursor.moveToFirst();
 
         while(cursor.isAfterLast()==false){
 
             arrayList.add(new Notes(cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2)));
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getString(3)));
             cursor.moveToNext();
 
         }
