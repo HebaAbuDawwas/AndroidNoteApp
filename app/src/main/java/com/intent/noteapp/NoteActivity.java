@@ -25,7 +25,8 @@ public class NoteActivity extends AppCompatActivity {
     TextView textbar;
     int Id;
    int userId = MainActivity.userId;
-   AlertDialog.Builder alertBuilder;
+   AlertDialog.Builder alertDelete;
+    AlertDialog.Builder alertSave;
 
 
     @Override
@@ -54,21 +55,45 @@ public class NoteActivity extends AppCompatActivity {
                 String temp;
                 temp =  noteEditText.getText().toString();
 
-                Toast.makeText(NoteActivity.this,temp, Toast.LENGTH_SHORT).show();
-                databaseSqlite.UpdateNote(Id+"",temp,noteTitle);
-                Intent in = new Intent(NoteActivity.this,MainActivity3.class);
-                startActivity(in);
-                finish();
+                 alertSave= new AlertDialog.Builder(NoteActivity.this);
+                    alertSave.setTitle("SURE ?");
+                    alertSave.setMessage("Are You Sure You Want To Save Edits :\nnote title:"+noteTitle+"\nnote:"+temp+"   ?");
+                    alertSave.setPositiveButton("Conform", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                             Toast.makeText(NoteActivity.this,temp, Toast.LENGTH_SHORT).show();
+                               databaseSqlite.UpdateNote(Id+"",temp,noteTitle);
+                            Intent in = new Intent(NoteActivity.this,MainActivity3.class);
+                            startActivity(in);
+                            finish();
+
+                        }
+                    });
+                    alertSave.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            Intent in = new Intent(NoteActivity.this,MainActivity3.class);
+                            startActivity(in);
+                            finish();
+                        }
+                    });
+                    alertSave.show();
+
+
+
+
+
             }
 
         });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    alertBuilder= new AlertDialog.Builder(NoteActivity.this);
-                    alertBuilder.setTitle("SURE ?");
-                    alertBuilder.setMessage("Are You Sure You Want To delete This Note :\nnote title:"+noteTitle+"\nnote:"+noteText+"   ?");
-                    alertBuilder.setPositiveButton("Conform", new DialogInterface.OnClickListener() {
+                    alertDelete= new AlertDialog.Builder(NoteActivity.this);
+                    alertDelete.setTitle("SURE ?");
+                    alertDelete.setMessage("Are You Sure You Want To delete This Note :\nnote title:"+noteTitle+"\nnote:"+noteText+"   ?");
+                    alertDelete.setPositiveButton("Conform", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             databaseSqlite.DeleteNote(Id+"");
@@ -77,13 +102,13 @@ public class NoteActivity extends AppCompatActivity {
                             finish();
                         }
                     });
-                    alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    alertDelete.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
-                    alertBuilder.show();
+                    alertDelete.show();
 
 
 
